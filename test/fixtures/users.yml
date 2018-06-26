@@ -5,6 +5,14 @@ michael:
   admin: true
   activated: true
   activated_at: <%= Time.zone.now %>
+  
+jason:
+  name: Jason Groff
+  email: jgroff88@gmail.com
+  password_digest: <%= User.digest('password') %>
+  admin: true
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 archer:
   name: Sterling Archer
