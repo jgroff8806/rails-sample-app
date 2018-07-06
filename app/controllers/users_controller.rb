@@ -16,7 +16,9 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
-
+  # Method to create a new user
+  # Sends user activation email upon signing up
+  # Redirects back to the home page
   def create
     @user = User.new(user_params)
     if @user.save
@@ -30,7 +32,7 @@ class UsersController < ApplicationController
 
   def edit
   end
-
+  # Method to update users profile
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
@@ -39,20 +41,21 @@ class UsersController < ApplicationController
       render 'edit'
     end
   end
-  
+  # Method to delete a user, which can only be done by an admin user
+  # or the user requesting to delete their own account
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "User deleted"
     redirect_to users_url
   end
-  
+  # Method to render and show who the user is following and paginates the list
   def following
     @title = "Following"
     @user  = User.find(params[:id])
     @users = @user.following.paginate(page: params[:page])
     render 'show_follow'
   end
-
+  # Method to render and show the users followers and paginates the list
   def followers
     @title = "Followers"
     @user  = User.find(params[:id])
@@ -61,7 +64,7 @@ class UsersController < ApplicationController
   end
 
   private
-
+    # User parameters
     def user_params
       params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation)
@@ -69,13 +72,13 @@ class UsersController < ApplicationController
 
     # Before filters
 
-    # Confirms the correct user.
+    # Confirms the correct user, if not redirects to the home page
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
     end
 
-    # Confirms an admin user.
+    # Confirms an admin user, if not redirects to the home page
     def admin_user
       redirect_to(root_url) unless current_user.admin?
     end

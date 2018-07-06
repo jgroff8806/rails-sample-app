@@ -1,3 +1,6 @@
+# Class that outlines the Micropost data stored in the DB
+# Utilizes local file upload for picture files
+# Validation of the user id, content and size of picture uploaded
 class Micropost < ApplicationRecord
   belongs_to :user
   default_scope -> { order(created_at: :desc) }
@@ -8,7 +11,8 @@ class Micropost < ApplicationRecord
 
   private
 
-    # Validates the size of an uploaded picture.
+    # Validates the size of an uploaded picture
+    # If the picture is > 5 MB, error prompt is displayed
     def picture_size
       if picture.size > 5.megabytes
         errors.add(:picture, "should be less than 5MB")

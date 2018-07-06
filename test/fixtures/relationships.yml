@@ -1,3 +1,5 @@
+# Sample data for relationship info, such as followers and following
+
 one:
   follower: michael
   followed: lana

@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-
+  # Method to populate and paginate the currently logged in users page
   def home
     if logged_in?
       @micropost  = current_user.microposts.build
